@@ -6,7 +6,7 @@ import logo from "../assets/logo.jpg";
 import { Icon } from '@iconify/react';
 
 export function Header() {
-    const {logout} = useUser()
+    const { logout, user } = useUser()
     const { car } = useCart();
     const carCount = car.length;
     const [isOpen, setIsOpen] = useState(false);
@@ -37,18 +37,24 @@ export function Header() {
                 <div className={`${isOpen ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-default">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0  bg-badgroud md:bg-badgroud dark:border-gray-700">
                         <li><NavLink to="/" className={navLinkStyle}>Home</NavLink></li>
-                        <li><NavLink to="/About" className={navLinkStyle}>About</NavLink></li>
                         <li><NavLink to="/Products" className={navLinkStyle}>Products</NavLink></li>
                         <li><NavLink to="/infouser" className={navLinkStyle}>Historial</NavLink></li>
-                        <li><NavLink to="/Login" className={navLinkStyle}>Login</NavLink></li>
-                        <li><button className="text-gray-900 dark:text-white hover:underline" onClick={logout}>Cerrar sesion</button></li>
-                        
+                        {!user ? (
+                            <li><NavLink to="/Login" className={navLinkStyle}>Login</NavLink></li>
+                        ) : (
+                            <li>
+                                <button className="text-gray-900 dark:text-white hover:underline" onClick={logout}>
+                                    Cerrar sesión
+                                </button>
+                            </li>
+                        )}
+
                         <li><NavLink to="/MyCart" className="relative"><Icon icon={"mdi-light:cart"} width={30} hanging={30} className='text-hoverbotton' />{carCount > 0 && (
                             <span className="absolute -top-2 -right-2 bg-botton text-white text-xs font-bold rounded-full px-1.5">
                                 {carCount}
                             </span>
                         )}</NavLink></li>
-                        
+
 
 
 

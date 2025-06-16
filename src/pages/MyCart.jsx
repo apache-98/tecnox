@@ -1,8 +1,33 @@
 import { useCart } from '../context/CartContext';
 import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { useUser } from '../context/useContext';
 
 
 export function MyCart() {
+
+    const navigate = useNavigate();
+    const { user } = useUser();
+    const handlePagar = () => {
+        if (!user) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Necesitas iniciar sesión',
+                text: 'Para continuar con el pago debes estar registrado.',
+                confirmButtonText: 'Ir a login',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login');
+                }
+            });
+        } else {
+
+            Swal.fire('Gracias por tu compra', 'Redirigiendo a la pasarela de pago...', 'success');
+
+        }
+    };
+
     const { car, removeItem, total } = useCart();
     return (
         <>
@@ -27,8 +52,8 @@ export function MyCart() {
                                     <div className='text-center flex justify-center'>
                                         <Icon icon={"mdi-light:delete"} width={30} hanging={30} onClick={() => removeItem(item.id)} className=' mt-4 text-red-500 hover:text-red-700 ' />
 
-                                     </div>
-                                    
+                                    </div>
+
                                 </div>
                             ))}
                         </div>
@@ -37,8 +62,9 @@ export function MyCart() {
                         Total a pagar: <span className="text-textprimary">${total}</span>
 
                     </div>
-                    <div  className=" text-textprimary text-center text-3xl font-bold">
-                        <button className="bg-botton hover:bg-hoverbotton text-white px-2 py-1 rounded">Pagar</button>
+                    <div className=" text-textprimary text-center text-3xl font-bold">
+
+                        <button onClick={handlePagar} className="bg-botton hover:bg-hoverbotton text-white px-2 py-1 rounded">Pagar</button>
                     </div>
 
                 </div>

@@ -24,8 +24,8 @@ export const CartProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const totalPrice = car.reduce((sum, item) => sum + item.price, 0);
-        setTotal(totalPrice);
+        const total = car.reduce((sum, item) => sum + item.price, 0);
+        setTotal(total);
     }, [car]);
 
 
@@ -33,8 +33,6 @@ export const CartProvider = ({ children }) => {
 
 
     const value = {
-        // productos: [productos],
-        // // menu:[menu, setMenu],
         addCar,
         car,
         removeItem,

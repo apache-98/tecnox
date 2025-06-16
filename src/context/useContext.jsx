@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { users } from "../utils/Users.js"
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -9,6 +10,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
 
+     const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
 
@@ -33,9 +35,10 @@ export const UserProvider = ({ children }) => {
             icon: "success",
             title: "Cierre Exitoso",
             text: ""
-        });
-
-    }
+      }).then(() => {
+        navigate('/'); 
+    });
+}
 
     useEffect(
         () => {
